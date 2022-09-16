@@ -1,7 +1,12 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
+import CountriesApiServises from './fetchCountries';
+// import countryNameFlage from './templates/countruFlags.hbs';
+// import countryInfo from './templates/countryDetails.hbs';
 
+console.log(countryNameFlage);
+console.log(countryInfo);
 const DEBOUNCE_DELAY = 300;
 
 // Notifix ------------------------
@@ -17,12 +22,17 @@ Notiflix.Notify.info('Cogito ergo sum');
 const refs = {
   search: document.querySelector('#search-box'),
 };
-console.log(refs);
+const countriesApiServises = new CountriesApiServises();
+// console.log(countriesApiServises.fetchCountries());
 
 refs.search.addEventListener('input', debounce(onSearch, 300));
+// let name = '';
 
 function onSearch(evt) {
-  const text = evt.target.value;
-  console.log(text);
-  Notiflix.Notify.info(`${text}`);
+  countriesApiServises.queryName = evt.target.value;
+
+  // Notiflix.Notify.info(`${name}`);
+  if (countriesApiServises.queryName !== '') {
+    countriesApiServises.fetchCountries();
+  }
 }
