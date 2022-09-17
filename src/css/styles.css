@@ -18,3 +18,25 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+.name-flage {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+.country-name {
+  margin: 0;
+}
+
+.info-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.name-info {
+  font-size: 20px;
+}
+.country-name-info {
+  font-size: 50px;
+  margin: 0;
+}

@@ -5,7 +5,11 @@ export default class CountriesApiServises {
 
   fetchCountries() {
     const url = `https://restcountries.com/v2/name/${this.name}?fields=name,capital,population,flags,languages`;
-    fetch(url).then(response => response.json().then(console.log));
+    return fetch(url).then(response =>
+      response.json().then(data => {
+        return data;
+      })
+    );
   }
 
   get queryName() {
