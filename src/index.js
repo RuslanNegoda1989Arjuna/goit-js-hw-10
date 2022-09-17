@@ -2,11 +2,11 @@ import './css/styles.css';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
 import CountriesApiServises from './fetchCountries';
-// import countryNameFlage from './templates/countruFlags.hbs';
-// import countryInfo from './templates/countryDetails.hbs';
+import countryNameFlage from './templates/countruFlags.hbs';
+import countryInfo from './templates/countryDetails.hbs';
 
-console.log(countryNameFlage);
-console.log(countryInfo);
+// console.log(countryNameFlage);
+// console.log(countryInfo);
 const DEBOUNCE_DELAY = 300;
 
 // Notifix ------------------------
