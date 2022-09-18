@@ -2,18 +2,8 @@ import './css/styles.css';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
 import CountriesApiServises from './fetchCountries';
-// import countryNameFlage from './templates/countruFlags.hbs';
-// import countryInfo from './templates/countryDetails.hbs';
 
-// console.log(countryNameFlage);
-// console.log(countryInfo);
 const DEBOUNCE_DELAY = 300;
-
-// Notifix ------------------------
-
-Notiflix.Notify.failure('Qui timide rogat docet negare');
-
-// Notifix ---------------------
 
 const refs = {
   search: document.querySelector('#search-box'),
@@ -22,7 +12,7 @@ const refs = {
 };
 const countriesApiServises = new CountriesApiServises();
 
-refs.search.addEventListener('input', debounce(onSearch, 300));
+refs.search.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 function onSearch(evt) {
   countriesApiServises.queryName = evt.target.value.trim();
@@ -33,21 +23,31 @@ function onSearch(evt) {
   }
 
   countriesApiServises.fetchCountries().then(data => {
-    console.log(data.length);
+    if (data.status === 404) {
+      mistakeError();
+    }
+
     const numberCountrys = data.length;
     if (numberCountrys > 10) {
-      Notiflix.Notify.info(
-        'Too many matches found. Please enter a more specific name.'
-      );
+      matchesCountryInfo();
     }
     if (numberCountrys >= 2 && numberCountrys < 10) {
       countryMarkup(data);
     }
     if (numberCountrys === 1) {
-      console.log('Here One Country');
       oneCountryMarkup(data);
     }
   });
+}
+
+function mistakeError() {
+  Notiflix.Notify.failure('Oops, there is no country with that name');
+}
+
+function matchesCountryInfo() {
+  Notiflix.Notify.info(
+    'Too many matches found. Please enter a more specific name.'
+  );
 }
 
 function countryMarkup(country) {
@@ -62,11 +62,6 @@ function countryMarkup(country) {
     .join('');
 
   refs.countryList.insertAdjacentHTML('afterbegin', murkup);
-}
-
-function clearInput() {
-  refs.countryList.innerHTML = '';
-  refs.countryInfo.innerHTML = '';
 }
 
 function oneCountryMarkup(country) {
@@ -86,4 +81,9 @@ function oneCountryMarkup(country) {
     })
     .join('');
   refs.countryInfo.insertAdjacentHTML('afterbegin', murkup);
+}
+
+function clearInput() {
+  refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
 }
