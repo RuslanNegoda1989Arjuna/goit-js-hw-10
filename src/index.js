@@ -22,22 +22,23 @@ function onSearch(evt) {
     return;
   }
 
-  countriesApiServises.fetchCountries().then(data => {
-    if (data.status === 404) {
+  countriesApiServises
+    .fetchCountries()
+    .then(data => {
+      const numberCountrys = data.length;
+      if (numberCountrys > 10) {
+        matchesCountryInfo();
+      }
+      if (numberCountrys >= 2 && numberCountrys < 10) {
+        countryMarkup(data);
+      }
+      if (numberCountrys === 1) {
+        oneCountryMarkup(data);
+      }
+    })
+    .catch(error => {
       mistakeError();
-    }
-
-    const numberCountrys = data.length;
-    if (numberCountrys > 10) {
-      matchesCountryInfo();
-    }
-    if (numberCountrys >= 2 && numberCountrys < 10) {
-      countryMarkup(data);
-    }
-    if (numberCountrys === 1) {
-      oneCountryMarkup(data);
-    }
-  });
+    });
 }
 
 function mistakeError() {
